@@ -6,12 +6,18 @@ const ejs = require('ejs');
 const photoController = require('./controllers/photoControllers');
 const pageController = require('./controllers/pageController');
 
+
+
 const app = express();
 
-mongoose.connect('mongodb://localhost/pcat-tes-db', {
+mongoose.connect('mongodb+srv://cigdem:Vq3Hdy4Y5Gzk5PHJ@cluster0.veesm.mongodb.net/pact-db?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   //useFindAndModify : false,
+}).then(() =>{
+  console.log('DB CONNECTED')
+}).catch((err)=>{
+  console.log(err)
 });
 
 //TEMPLATE ENGINE
@@ -36,7 +42,7 @@ app.get('/about', pageController.getAboutPage );
 app.get('/add', pageController.getAddPage);
 app.get('/photos/edit/:id', pageController.getEditPage);
 
-const port = 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Sunucu ${port} portunda başlatıldı..`);
 });
